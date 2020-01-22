@@ -1,19 +1,19 @@
 {
-  "name": "@vaadin-component-factory/vcf-element",
+  "name": "@vaadin-component-factory/dagre-d3-component",
   "version": "0.1.0",
-  "description": "--elementdescription--",
-  "main": "theme/lumo/vcf-element.js",
+  "description": "Web Component wrapper for Dagre D3",
+  "main": "theme/lumo/dagre-d3-component.js",
   "author": "Vaadin Ltd",
   "license": "https://raw.githubusercontent.com/vaadin/vaadin-incubator-element/master/LICENSE",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vaadin-component-factory/vcf-element.git"
+    "url": "git+https://github.com/vaadin-component-factory/dagre-d3-component.git"
   },
   "keywords": [
     "Vaadin",
     "vaadin-incubator-element",
     "vaadin-component-factory",
-    "vcf-element",
+    "dagre-d3-component",
     "web-components",
     "web-component",
     "polymer"
@@ -26,7 +26,6 @@
     "build:prod": "run-s build:api build:demo",
     "build:api": "npm run prestart && polymer build",
     "build:demo": "webpack",
-    "postinstall": "node util/init.js",
     "publish": "node util/publish.js"
   },
   "husky": {
@@ -92,9 +91,9 @@
     "webpack-merge": "^4.2.1"
   },
   "bugs": {
-    "url": "https://github.com/vaadin-component-factory/vcf-element/issues"
+    "url": "https://github.com/vaadin-component-factory/dagre-d3-component/issues"
   },
-  "homepage": "https://github.com/vaadin-component-factory/vcf-element#readme",
+  "homepage": "https://github.com/vaadin-component-factory/dagre-d3-component#readme",
   "directories": {
     "test": "test"
   }
