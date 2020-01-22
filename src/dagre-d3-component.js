@@ -48,9 +48,9 @@ class DagreD3Component extends ElementMixin(ThemableMixin(PolymerElement)) {
         }
       </style>
 
-      <div class="card">
-        <svg id="svg"><g id="inner" /></svg>
-      </div>
+      <svg id="svg" part="svg">
+        <g id="inner" />
+      </svg>
     `;
   }
 
@@ -63,7 +63,12 @@ class DagreD3Component extends ElementMixin(ThemableMixin(PolymerElement)) {
   }
 
   static get properties() {
-    return {};
+    return {
+      data: {
+        type: Object,
+        observer: '_dataChanged'
+      }
+    };
   }
 
   ready() {
@@ -73,31 +78,24 @@ class DagreD3Component extends ElementMixin(ThemableMixin(PolymerElement)) {
     const zoom = d3.zoom().on('zoom', () => {
       inner.attr('transform', d3.event.transform);
     });
-
     svg.call(zoom);
-
-    // Create and configure the renderer
-    const render = dagreD3.render();
-
-    // Create the input graph
-    const g = new dagreD3.graphlib.Graph().setGraph({});
-
-    // Add nodes and edges
-    // json.nodes.forEach(node => g.setNode(node.id, { ...node }));
-    // json.edges.forEach(edge => g.setEdge(edge.from, edge.to, { ...edge }));
-
-    // Set margins, if not present
-    if (!g.graph().hasOwnProperty('marginx') && !g.graph().hasOwnProperty('marginy')) {
-      g.graph().marginx = 20;
-      g.graph().marginy = 20;
+    this._render = dagreD3.render();
+    this._g = new dagreD3.graphlib.Graph().setGraph({});
+    if (!this._g.graph().hasOwnProperty('marginx') && !this._g.graph().hasOwnProperty('marginy')) {
+      this._g.graph().marginx = 20;
+      this._g.graph().marginy = 20;
     }
-
-    g.graph().transition = selection => {
+    this._g.graph().transition = selection => {
       return selection.transition().duration(500);
     };
+  }
 
+  _dataChanged(data) {
+    // Add nodes and edges
+    if (data.nodes) data.nodes.forEach(node => this._g.setNode(node.id, { ...node }));
+    if (data.edges) data.edges.forEach(edge => this._g.setEdge(edge.from, edge.to, { ...edge }));
     // Render the graph into svg g
-    d3.select(this.$.inner).call(render, g);
+    d3.select(this.$.inner).call(this._render, this._g);
   }
 }
 
